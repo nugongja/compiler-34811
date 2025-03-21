@@ -14,37 +14,9 @@ char str_pool[STR_POOL_SIZE];
 char symbol_table[SYM_TABLE_SIZE][4];  // ID, Index, Length, Hash_idx
 int sym_id = 0;  // symbol table에 저장된 요소의 개수
 
-
-
-
-// 심볼 테이블 출력 함수
-void printSymbolTable() {
-	int idx = 0;
-	printf("--------- Symbol Table -----------\n");
-	printf(" ID\tIndex\tLength\tHashValue\n");
-	for (int i = 0; i < sym_id; i++) {
-		printf(" %d\t%d\t%d\t%d\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], symbol_table[i][3]);
-	}
-	printf("----------------------------------\n");
-}
-
-
-// 문자열 키 계산
-int calc_key(char* str) {
-	int length = strlen(str);
-	int key = 0;
-
-	for (int i = 0; i < length; i++) {
-		key += (int)*(str + i);
-	}
-
-	return key;
-}
-
-// 해시 테이블 인덱스값 출력
-int divisionMethod(int key, int tableSize) {
-	return key % tableSize;
-}
+void printSymbolTable(vioid);
+int calc_key(char* str);
+int divisionMethod(int key, int tableSize);
 
 
 
@@ -124,3 +96,32 @@ int main() {
 	return 0;
 }
 
+
+// 심볼 테이블 출력 함수
+void printSymbolTable() {
+	int idx = 0;
+	printf("--------- Symbol Table -----------\n");
+	printf(" ID\tIndex\tLength\tHashValue\n");
+	for (int i = 0; i < sym_id; i++) {
+		printf(" %d\t%d\t%d\t%d\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], symbol_table[i][3]);
+	}
+	printf("----------------------------------\n");
+}
+
+
+// 문자열 키 계산
+int calc_key(char* str) {
+	int length = strlen(str);
+	int key = 0;
+
+	for (int i = 0; i < length; i++) {
+		key += (int)*(str + i);
+	}
+
+	return key;
+}
+
+// 해시 테이블 인덱스값 출력
+int divisionMethod(int key, int tableSize) {
+	return key % tableSize;
+}
