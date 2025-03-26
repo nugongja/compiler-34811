@@ -79,7 +79,7 @@ int main() {
 					}
 				}
 				else {
-					printf("Error - Invalid identifire (%s)\n", str_pool + index_start);	// 유효하지 않은 식별자인 경우
+					printf("Error - Invalid identifier (%s)\n", str_pool + index_start);	// 유효하지 않은 식별자인 경우
 					index_next = index_start;												// 에러 발생 시 현재 위치 초기화
 					err_flag = FALSE;				
 				}
