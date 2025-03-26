@@ -143,7 +143,7 @@ void printSymbolTable() {
 * index_next - 식별자의 string pool에서의 마지막 index
 * 
 * 반환값:
-* 0(FALSE) - 식별자의 길이 초과 혹은 심볼테이블에 존재하는 식별자인 경우 0을 반환
+* 0(FALSE) - 식별자의 길이 초과, 심볼테이블에 존재하는 식별자인 경우, 심볼 테이블 오버플로우인 경우 0을 반환
 * 1(TRUE) - 정상적으로 심볼 테이블에 식별자를 삽입한 경우 1을 반환
 */
 int insertSymbol(int index_start, int index_next) {
@@ -152,6 +152,12 @@ int insertSymbol(int index_start, int index_next) {
 
 	if (new_len > STR_LEN_SIZE) {															// 식별자의 길이는 최대 15자
 		printf("Error - Identifier too long (%s)\n", new_str);								
+		return FALSE;
+	}
+
+	
+	if (sym_id >= SYM_TABLE_SIZE) {
+		printf("Error - Symbol table overflow. Cannot store (%s)\n", new_str);				// 심볼 테이블 오버플로우 방지
 		return FALSE;
 	}
 
