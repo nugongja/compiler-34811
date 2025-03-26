@@ -37,6 +37,9 @@ void printHashTable(void);
 
 
 
+
+// == main function ==
+
 int main() {
 	FILE* fp;
 	int result;
@@ -115,7 +118,13 @@ int main() {
 
 // == symbol table function ==
 
-// 심볼 테이블 출력 함수
+/* printSymbolTable()
+* 심볼 테이블 출력 함수
+*
+* 입력: 없음
+*
+* 반환값: 없음
+*/
 void printSymbolTable() {
 	printf("\n----------------- Symbol Table -------------------\n");					
 	printf(" Name\t\t\tID\tIndex\tLength\n");
@@ -126,7 +135,17 @@ void printSymbolTable() {
 	printf("--------------------------------------------------\n\n");
 }
 
-// 식별자를 심볼 테이블에 삽입
+/* insertSymbol()
+* 식별자의 유효성 검사 및 심볼 테이블에 삽입
+*
+* 입력:
+* index_start - 식별자의 string pool에서의 start index
+* index_next - 식별자의 string pool에서의 마지막 index
+* 
+* 반환값:
+* 0(FALSE) - 식별자의 길이 초과 혹은 심볼테이블에 존재하는 식별자인 경우 0을 반환
+* 1(TRUE) - 정상적으로 심볼 테이블에 식별자를 삽입한 경우 1을 반환
+*/
 int insertSymbol(int index_start, int index_next) {
 	char* new_str = str_pool + index_start;
 	int new_len = index_next - index_start - 1;
@@ -169,7 +188,15 @@ int insertSymbol(int index_start, int index_next) {
 
 // == hash table function ==
 
-// 식별자 키 계산
+/* calc_key()
+* 식별자의 키값 계산
+*
+* 입력:
+* str - 식별자
+*
+* 반환값:
+* key - 식별자를 이루는 문자들의 정수값의 합
+*/
 int calc_key(char* str) {
 	int length = strlen(str);
 	int key = 0;
@@ -182,7 +209,15 @@ int calc_key(char* str) {
 }
 
 
-// hash code 계산 (제산법)
+/* divisionMethod()
+* hash code 계산 (제산법)
+*
+* 입력:
+* key - 식별자의 키값
+* tableSize - 해시 테이블의 사이즈
+* 
+* 반환값: 식별자의 해시 테이블 인덱스 값
+*/
 int divisionMethod(int key, int tableSize) {
 	return key % tableSize;
 }
@@ -195,7 +230,7 @@ int divisionMethod(int key, int tableSize) {
 * index - 현재 string pool 위치
 * hscode - 현재 입력된 symbol의 hash code
 *
-* 출력:
+* 반환값:
 * HTpointer - 찾고자 하는 symbol이 이미 존재할 경우 해당 symbol이 저장된 HTpointer 반환
 *             없을 경우는 NULL 반환
 */
@@ -230,7 +265,7 @@ HTpointer lookup_hash_table(int index, int hscode) {
 * index - 현재 string pool 위치
 * hscode - 현재 입력된 symbol의 hash code
 *
-* 출력: 없음
+* 반환값: 없음
 */
 void add_hash_table(int index, int hscode) {
 	// 새 항목 생성 및 초기화
@@ -255,7 +290,13 @@ void add_hash_table(int index, int hscode) {
 }
 
 
-// 해시 테이블 내용을 출력하는 함수 추가
+/* add_hash_table()
+* 해시 테이블 내용을 출력하는 함수
+*
+* 입력: 없음
+*
+* 반환값: 없음
+*/
 void printHashTable() {
 	printf("\n---------- Hash Table ----------\n");
 	for (int i = 0; i < HASH_TABLE_SIZE; i++) {
