@@ -22,6 +22,7 @@ int sym_id = 0;																				// symbol table에 저장된 요소의 개수
 typedef struct HTentry* HTpointer;
 typedef struct HTentry {
 	int index;
+	int id;
 	HTpointer next;
 }HTentry;
 HTpointer HT[HASH_TABLE_SIZE];
@@ -32,7 +33,7 @@ int insertSymbol(int index_start, int index_next);
 int calc_key(char* str);
 int divisionMethod(int key, int tableSize);
 HTpointer lookup_hash_table(int id_index, int hscode);
-void add_hash_table(int id_index, int hscode);
+void add_hash_table(int id, int id_index, int hscode);
 void printHashTable(void);
 
 
@@ -57,7 +58,16 @@ int main() {
 	}
 
 	
-	int err_flag = FALSE;																	// 식별자가 유효한지 검사하는 변수
+	// 해시 테이블 초기화
+	for (int i = 0; i < HASH_TABLE_SIZE; i++) {
+		HT[i] = NULL;
+	}
+
+
+	
+	int err_flag = FALSE;			
+	int err_flag_digit = FALSE;
+	// 식별자가 유효한지 검사하는 변수
 	do {
 		c = fgetc(fp);																		// 문자열 하나씩 검사
 
@@ -79,7 +89,13 @@ int main() {
 					}
 				}
 				else {
-					printf("Error - Invalid identifier (%s)\n", str_pool + index_start);	// 유효하지 않은 식별자인 경우
+					if (err_flag_digit == TRUE) {
+						printf("Error - start with digit (%s)\n", str_pool + index_start);	// 숫자로 시작하는 경우
+						err_flag_digit = FALSE;
+					}
+					else {
+						printf("Error - Illegal identifier (%s)\n", str_pool + index_start);// 유효하지 않은 식별자인 경우
+					}
 					index_next = index_start;												// 에러 발생 시 현재 위치 초기화
 					err_flag = FALSE;				
 				}
@@ -96,6 +112,7 @@ int main() {
 			str_pool[index_next++] = (char)c;
 			if (first_char) {																// 숫자가 맨 처음으로 나오면 유효하지 않은 식별자
 				err_flag = TRUE;
+				err_flag_digit = TRUE;
 				first_char = FALSE;
 			}
 		}
@@ -126,13 +143,12 @@ int main() {
 * 반환값: 없음
 */
 void printSymbolTable() {
-	printf("\n----------------- Symbol Table -------------------\n");					
-	printf(" Name\t\t\tID\tIndex\tLength\n");
-	printf("--------------------------------------------------\n");
+	printf("\n\nSymbol Table:\n");					
+	printf("ID\tIndex\tLength\tSymbol\n");
 	for (int i = 0; i < sym_id; i++) {
-		printf(" %-16s\t%d\t%d\t%d\n", str_pool+symbol_table[i][1], symbol_table[i][0], symbol_table[i][1], symbol_table[i][2]);
+		printf("%d\t%d\t%d\t%s\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], str_pool + symbol_table[i][1]);
 	}
-	printf("--------------------------------------------------\n\n");
+	printf("\n");
 }
 
 /* insertSymbol()
@@ -151,13 +167,13 @@ int insertSymbol(int index_start, int index_next) {
 	int new_len = index_next - index_start - 1;
 
 	if (new_len > STR_LEN_SIZE) {															// 식별자의 길이는 최대 15자
-		printf("Error - Identifier too long (%s)\n", new_str);								
+		printf("Error - Exceed\n");								
 		return FALSE;
 	}
 
 	
 	if (sym_id >= SYM_TABLE_SIZE) {
-		printf("Error - Symbol table overflow. Cannot store (%s)\n", new_str);				// 심볼 테이블 오버플로우 방지
+		printf("Error - Symbol table overflow. Cannot store\n");							// 심볼 테이블 오버플로우 방지
 		return FALSE;
 	}
 
@@ -170,11 +186,11 @@ int insertSymbol(int index_start, int index_next) {
 	// 식별자 중복 여부 확인
 	HTpointer htp = lookup_hash_table(index_start, hscode);
 	if (htp != NULL) {
-		printf("%s (Already exists)\n", new_str);
+		printf("%d\t%s (already exists)\n", hscode, new_str);
 		return FALSE;
 	} 
 	else {
-		printf("%s\n", str_pool + index_start);												// 정상적인 식별자 출력
+		printf("%d\t%s\n", hscode, new_str);												// 정상적인 식별자 출력
 	}
 
 
@@ -183,7 +199,7 @@ int insertSymbol(int index_start, int index_next) {
 	symbol_table[sym_id][1] = index_start;
 	symbol_table[sym_id][2] = new_len;
 
-	add_hash_table(index_start, hscode);													// 해시 테이블에는 string_pool index만 저장
+	add_hash_table(symbol_table[sym_id][0], index_start, hscode);							// 해시 테이블에는 string_pool index만 저장
 	sym_id++;
 
 	return TRUE;
@@ -229,6 +245,7 @@ int divisionMethod(int key, int tableSize) {
 }
 
 
+
 /* lookup_hash_table()
 * hash bucket에 동일한 심벌이 존재하는지 찾는 함수(해시 테이블에 이미 존재하면 포인터 반환, 없으면 NULL 반환)
 * 
@@ -250,12 +267,14 @@ HTpointer lookup_hash_table(int index, int hscode) {
 		int existing_idx = entry->index;
 		int existing_len = 0;
 
+		
 		while (str_pool[existing_idx + existing_len] != '\0') existing_len++;
 
 		if (existing_len == str_len &&
 			strncmp(str_pool + existing_idx, str_pool + index, str_len) == 0) {
 			return entry;
 		}
+		
 
 		entry = entry->next;
 	}
@@ -273,7 +292,7 @@ HTpointer lookup_hash_table(int index, int hscode) {
 *
 * 반환값: 없음
 */
-void add_hash_table(int index, int hscode) {
+void add_hash_table(int id, int index, int hscode) {
 	// 새 항목 생성 및 초기화
 	HTpointer newEntry = (HTpointer)malloc(sizeof(HTentry));
 	if (newEntry == NULL) {
@@ -282,6 +301,7 @@ void add_hash_table(int index, int hscode) {
 	}
 
 	newEntry->index = index;
+	newEntry->id = id;
 	newEntry->next = NULL;
 
 
@@ -304,7 +324,7 @@ void add_hash_table(int index, int hscode) {
 * 반환값: 없음
 */
 void printHashTable() {
-	printf("\n---------- Hash Table ----------\n");
+	printf("\n\nHash Table:\n");
 	for (int i = 0; i < HASH_TABLE_SIZE; i++) {
 		HTpointer curr = HT[i];
 		if (curr == NULL) {																	// 해시 버킷의 비어 있는 부분은 출력하지 않음
@@ -313,10 +333,10 @@ void printHashTable() {
 
 		printf("[%d] -> ", i);
 		while (curr != NULL) {
-			printf("%s(String Start Index:%d) -> ", str_pool + curr->index, curr->index);
+			printf("%d -> ", curr->id);
 			curr = curr->next;
 		}
 		printf("NULL\n");
 	}
-	printf("--------------------------------\n\n");
+	printf("\n");
 }
