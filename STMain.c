@@ -331,7 +331,7 @@ void printHashTable() {
 			continue;
 		}
 
-		printf("[%d] -> ", i);
+		printf("[%d]: ", i);
 		while (curr != NULL) {
 			printf("%d -> ", curr->id);
 			curr = curr->next;
