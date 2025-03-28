@@ -7,7 +7,7 @@
 #define STR_LEN_SIZE 15
 #define SYM_TABLE_SIZE 100
 #define STR_POOL_SIZE 500
-#define HASH_TABLE_SIZE 20
+#define HASH_TABLE_SIZE 11
 #define TRUE 1
 #define FALSE 0
 
@@ -51,7 +51,7 @@ int main() {
 	bool first_char = TRUE;																	// 첫 글자인지 여부 확인
 
 	// 파일 열기
-	result = fopen_s(&fp, "example.txt", "r");
+	result = fopen_s(&fp, "example3.txt", "r");
 	if (result != 0) {
 		printf("파일을 열수 없습니다(%d)\n", result);
 		return -1;
