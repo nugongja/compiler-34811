@@ -48,13 +48,18 @@ void main()
 		case TRPAREN:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TRPAREN", yytext); break;
 		case TLBRACE:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TLBRACE", yytext); break;
 		case TRBRACE:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TRBRACE", yytext); break;
+		case TASSIGN:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TASSIGN", yytext); break;
 		case TIDENT:			{ 
 								ST_index = process_sym_table(yytext);
-								if (ST_index != -1) {printf("%d\t%s\t\t%d\t\t%s", lineNumber, "TIDENT", ST_index, yytext); break;}
+								if (ST_index != -1) {printf("%d\t%s\t\t%d\t\t%s", lineNumber, "TIDENT", ST_index, yytext);}
 								}
+								break;
 		case TNUMBER:    		printf("%d\t%s\t\t\t\t%s", lineNumber, "TNUMBER", yytext); break;
 		case TSEMI:				printf("%d\t%s\t\t\t\t%s", lineNumber, "TSEMI", yytext); break;
 		case TSTRING:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TSTRING", yytext); break;
+		case TFLOATNUM:			printf("%d\t%s\t\t\t%s", lineNumber, "TFLOATNUM", yytext); break;
+		case TMUL:				printf("%d\t%s\t\t\t\t%s", lineNumber, "TMUL", yytext); break;
+		case TINTNUM:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TINTNUM", yytext); break;
 		default:         		printf("%d\t%s\t\t\t\t%s", lineNumber, "?", yytext); break;
 		}
 		printf("\n");

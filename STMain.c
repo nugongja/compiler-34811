@@ -72,7 +72,7 @@ int process_sym_table(char* identifier) {
 	// 식별자 중복 여부 확인
 	HTpointer htp = lookup_hash_table(index_start, hash_value);
 	if (htp != NULL) {
-		printf("%d\t%s (already exists)\n", hash_value, str_pool + index_start);
+		printf("%d\t%s\t\t%d\t\t%s (already exists)", lineNumber, "TIDENT", htp->id, identifier);
 		return -1;
 	}
 	else {
@@ -87,7 +87,7 @@ int process_sym_table(char* identifier) {
 	index_start += strlen(identifier);
 	str_pool[index_start++] = '\0';
 
-	return symbol_table[sym_id-1][1];
+	return symbol_table[sym_id-1][0];
 }
 
 

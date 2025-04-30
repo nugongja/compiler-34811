@@ -11,7 +11,7 @@ void print_error(int error_num, char* identifier)
 		break;
 	case 2:
 		/* long identifier*/
-		printf("Error - Long identifier (%s)\n", identifier);
+		printf("Error - Long identifier (%s)", identifier);
 		break;
 	case 3:
 		/* illegal identifier */
@@ -19,18 +19,18 @@ void print_error(int error_num, char* identifier)
 		break;
 	case 4:
 		/* symbol table overflow */
-		printf("Error - Symbol table overflow. Cannot store (%s)\n", identifier);
+		printf("Error - Symbol table overflow. Cannot store (%s)", identifier);
 		break;
 	case 5:
 		/* string pool overflow*/
-		printf("Error - String pool overflow. Cannot store (%s)\n", identifier);
+		printf("Error - String pool overflow. Cannot store (%s)", identifier);
 		break;
 	case 6:
 		/* hash table overflow */
-		printf("Error - Hash table overflow. Cannot store (%s)\n", identifier);
+		printf("Error - Hash table overflow. Cannot store (%s)", identifier);
 		break;
 	default:
-		printf("Error - Unknown (%s)\n", identifier);
+		printf("Error - Unknown (%s)", identifier);
 		break;
 	}
 }
