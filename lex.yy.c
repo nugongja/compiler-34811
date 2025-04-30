@@ -282,20 +282,20 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 41
-#define YY_END_OF_BUFFER 42
+#define YY_NUM_RULES 45
+#define YY_END_OF_BUFFER 46
 static yyconst short int yy_accept[99] =
     {   0,
-        0,    0,   42,   40,   36,   37,   40,   40,   40,   40,
-       23,   24,   33,   40,   40,   40,   28,   28,   38,   40,
-       27,   40,   32,   32,   32,   32,   32,   32,   32,   32,
-       25,   40,   26,   11,    0,   39,    0,   22,   14,   20,
-       16,   30,   18,   17,   19,    0,   35,   21,    0,   28,
-       30,   31,   28,   28,   12,   10,   13,   32,   32,   32,
-       32,   32,    3,   32,   32,   32,   32,   15,    0,    0,
-       35,   29,   28,   32,   32,   32,   32,    4,   32,   32,
-       32,   34,    0,    8,   32,    2,   32,   32,    6,   32,
-        0,   29,    1,    9,   32,    7,    5,    0
+        0,    0,   46,   44,   40,   41,   44,   44,   30,   44,
+       23,   24,   28,   29,   31,   32,   33,   33,   42,   44,
+       27,   44,   37,   37,   37,   37,   37,   37,   37,   37,
+       25,   44,   26,   11,    0,   43,    0,   22,   14,   20,
+       16,   33,   18,   17,   19,    0,   39,   21,    0,   33,
+       33,   36,   34,   33,   12,   10,   13,   37,   37,   37,
+       37,   37,    3,   37,   37,   37,   37,   15,    0,    0,
+       39,   35,   34,   37,   37,   37,   37,    4,   37,   37,
+       37,   38,    0,    8,   37,    2,   37,   37,    6,   37,
+        0,   35,    1,    9,   37,    7,    5,    0
 
     } ;
 
@@ -824,36 +824,56 @@ return(TASSIGN);
 case 28:
 YY_RULE_SETUP
 #line 38 "MiniC.l"
-return(TNUMBER);
+return(TSTAR);
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 39 "MiniC.l"
-return(TFLOATNUM);
+return(TPLUS);
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 40 "MiniC.l"
-return(TINTNUM);
+return(TMOD);
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 41 "MiniC.l"
-print_error(1, yytext);
+return(TMINUS);
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 42 "MiniC.l"
-return(TIDENT);
+return(TSLASH);
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 43 "MiniC.l"
-return(TMUL);
+return(TINTNUM);
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 44 "MiniC.l"
+return(TNUMBER);
+	YY_BREAK
+case 35:
+YY_RULE_SETUP
+#line 45 "MiniC.l"
+return(TFLOATNUM);
+	YY_BREAK
+case 36:
+YY_RULE_SETUP
+#line 46 "MiniC.l"
+print_error(1, yytext);
+	YY_BREAK
+case 37:
+YY_RULE_SETUP
+#line 47 "MiniC.l"
+return(TIDENT);
+	YY_BREAK
+case 38:
+YY_RULE_SETUP
+#line 48 "MiniC.l"
 {
 							// 주석 내 줄 개수 세기
 							for (int i=0; yytext[i] != '\0'; i++) {
@@ -861,42 +881,42 @@ YY_RULE_SETUP
 							}
 							}
 	YY_BREAK
-case 35:
-YY_RULE_SETUP
-#line 50 "MiniC.l"
-;
-	YY_BREAK
-case 36:
-YY_RULE_SETUP
-#line 51 "MiniC.l"
-;
-	YY_BREAK
-case 37:
-YY_RULE_SETUP
-#line 52 "MiniC.l"
-lineNumber++;
-	YY_BREAK
-case 38:
-YY_RULE_SETUP
-#line 53 "MiniC.l"
-return(TSEMI);
-	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 54 "MiniC.l"
-return(TSTRING);	
+;
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 55 "MiniC.l"
-print_error(3, yytext);
+;
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 56 "MiniC.l"
+lineNumber++;
+	YY_BREAK
+case 42:
+YY_RULE_SETUP
+#line 57 "MiniC.l"
+return(TSEMI);
+	YY_BREAK
+case 43:
+YY_RULE_SETUP
+#line 58 "MiniC.l"
+return(TSTRING);	
+	YY_BREAK
+case 44:
+YY_RULE_SETUP
+#line 59 "MiniC.l"
+print_error(3, yytext);
+	YY_BREAK
+case 45:
+YY_RULE_SETUP
+#line 60 "MiniC.l"
 ECHO;
 	YY_BREAK
-#line 900 "lex.yy.c"
+#line 920 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1782,7 +1802,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 56 "MiniC.l"
+#line 60 "MiniC.l"
 
 
 int yywrap() {

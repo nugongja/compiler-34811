@@ -58,8 +58,12 @@ void main()
 		case TSEMI:				printf("%-7d %-15s %-15s %s", lineNumber, "TSEMI", "", yytext); break;
 		case TSTRING:			printf("%-7d %-15s %-15s %s", lineNumber, "TSTRING", "", yytext); break;
 		case TFLOATNUM:			printf("%-7d %-15s %-15s %s", lineNumber, "TFLOATNUM", "", yytext); break;
-		case TMUL:				printf("%-7d %-15s %-15s %s", lineNumber, "TMUL", "", yytext); break;
+		case TSTAR:				printf("%-7d %-15s %-15s %s", lineNumber, "TSTAR", "", yytext); break;
 		case TINTNUM:			printf("%-7d %-15s %-15s %s", lineNumber, "TINTNUM", "", yytext); break;
+		case TPLUS:				printf("%-7d %-15s %-15s %s", lineNumber, "TPLUS", "", yytext); break;
+		case TMOD:				printf("%-7d %-15s %-15s %s", lineNumber, "TMOD", "", yytext); break;
+		case TMINUS:			printf("%-7d %-15s %-15s %s", lineNumber, "TMINUS", "", yytext); break;
+		case TSLASH:			printf("%-7d %-15s %-15s %s", lineNumber, "TSLASH", "", yytext); break;
 		default:         		printf("%-7d %-15s %-15s %s", lineNumber, "?", "", yytext); break;
 		}
 		printf("\n");
