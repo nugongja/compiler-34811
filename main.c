@@ -64,6 +64,7 @@ void main()
 		case TMOD:				printf("%-7d %-15s %-15s %s", lineNumber, "TMOD", "", yytext); break;
 		case TMINUS:			printf("%-7d %-15s %-15s %s", lineNumber, "TMINUS", "", yytext); break;
 		case TSLASH:			printf("%-7d %-15s %-15s %s", lineNumber, "TSLASH", "", yytext); break;
+		case TDOT:				printf("%-7d %-15s %-15s %s", lineNumber, "TDOT", "", yytext); break;
 		default:         		printf("%-7d %-15s %-15s %s", lineNumber, "?", "", yytext); break;
 		}
 		printf("\n");
