@@ -6,8 +6,8 @@
 
 #define STR_LEN_SIZE 15
 #define SYM_TABLE_SIZE 100
-#define STR_POOL_SIZE 500
-#define HASH_TABLE_SIZE 11
+#define STR_POOL_SIZE 1000
+#define HASH_TABLE_SIZE 100
 #define TRUE 1
 #define FALSE 0
 
@@ -17,6 +17,7 @@ char str_pool[STR_POOL_SIZE];																// 문자열 저장 배열
 int symbol_table[SYM_TABLE_SIZE][3];														// ID, Index, Length
 int sym_id = 0;																				// symbol table에 저장된 요소의 개수
 int index_start = 0;
+extern lineNumber;
 
 
 // 해시 테이블 정의
@@ -36,13 +37,34 @@ void add_hash_table(int id, int id_index, int hscode);
 void printHashTable(void);
 void init_sym_table(void);
 void init_hash_table(void);
+extern void print_error(int error_num, char* identifier);
 
 
 
 
 // == main function ==
-int process_sym_table(char* identifier) {																
+int process_sym_table(char* identifier) {			
+
+	/* string pool overflow (5) */
+	if (index_start + strlen(identifier) + 1 >= STR_POOL_SIZE) {
+		print_error(5, identifier);
+		return -1;
+	}
+
 	strcpy_s(str_pool + index_start, STR_POOL_SIZE - index_start,identifier);
+
+	/* long identifier (2) */
+	if (strlen(identifier) > STR_LEN_SIZE) {
+		print_error(2, identifier);
+		return -1;
+	}
+
+	/* symbol table overflow (4) */
+	if (sym_id >= SYM_TABLE_SIZE) {
+		print_error(4, identifier);
+		return -1;
+	}
+
 
 	// 해시값 계산
 	int hash_value = divisionMethod(str_pool + index_start, HASH_TABLE_SIZE);
@@ -60,14 +82,12 @@ int process_sym_table(char* identifier) {
 		symbol_table[sym_id][2] = (int)strlen(str_pool + index_start);
 		add_hash_table(symbol_table[sym_id][0], index_start, hash_value);							// 해시 테이블에는 string_pool index만 저장
 		sym_id++;
-
-		printf("%d\t%s\n", hash_value, str_pool + index_start);												// 정상적인 식별자 출력
 	}
 
 	index_start += strlen(identifier);
 	str_pool[index_start++] = '\0';
 
-	return 0;
+	return symbol_table[sym_id-1][1];
 }
 
 
@@ -166,8 +186,8 @@ void add_hash_table(int id, int index, int hscode) {
 	// 새 항목 생성 및 초기화
 	HTpointer newEntry = (HTpointer)malloc(sizeof(HTentry));
 	if (newEntry == NULL) {
-		printf("메모리 할당 실패\n");
-		exit(1);
+		print_error(6, "hashtableoverflow");
+		return;
 	}
 
 	newEntry->index = index;
@@ -211,6 +231,8 @@ void printHashTable() {
 	}
 	printf("\n");
 }
+
+
 
 
 
