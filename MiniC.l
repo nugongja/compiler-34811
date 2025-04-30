@@ -35,11 +35,11 @@ extern int lineNumber;
 "{"      						return(TLBRACE);
 "}"      						return(TRBRACE);
 "="							return(TASSIGN);
-[0-9]+[A-Za-z0-9_]+				print_error(1, yytext);
-[A-Za-z_][A-Za-z0-9_]*				return(TIDENT);
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?		return(TNUMBER);
 [+-]?[0-9]+\.[0-9]+([eE][-+]?[0-9]+)?		return(TFLOATNUM);
 [+-]?[0-9]+						return(TINTNUM);
+[0-9]+[A-Za-z0-9_]+				print_error(1, yytext);
+[A-Za-z_][A-Za-z0-9_]*				return(TIDENT);
 "*"							return(TMUL);
 "/*"([^*]|\*+[^*/])*\*+"/"			{
 							// 주석 내 줄 개수 세기
@@ -56,6 +56,5 @@ extern int lineNumber;
 %%
 
 int yywrap() {
-	printf("=== End of Lex ===\n");
 	return 1;
 }

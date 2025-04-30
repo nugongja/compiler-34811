@@ -287,15 +287,15 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 static yyconst short int yy_accept[99] =
     {   0,
         0,    0,   42,   40,   36,   37,   40,   40,   40,   40,
-       23,   24,   33,   40,   40,   40,   30,   30,   38,   40,
-       27,   40,   29,   29,   29,   29,   29,   29,   29,   29,
+       23,   24,   33,   40,   40,   40,   28,   28,   38,   40,
+       27,   40,   32,   32,   32,   32,   32,   32,   32,   32,
        25,   40,   26,   11,    0,   39,    0,   22,   14,   20,
-       16,   32,   18,   17,   19,    0,   35,   21,    0,   28,
-       28,   28,   28,   28,   12,   10,   13,   29,   29,   29,
-       29,   29,    3,   29,   29,   29,   29,   15,    0,    0,
-       35,   31,   28,   29,   29,   29,   29,    4,   29,   29,
-       29,   34,    0,    8,   29,    2,   29,   29,    6,   29,
-        0,   31,    1,    9,   29,    7,    5,    0
+       16,   30,   18,   17,   19,    0,   35,   21,    0,   28,
+       30,   31,   28,   28,   12,   10,   13,   32,   32,   32,
+       32,   32,    3,   32,   32,   32,   32,   15,    0,    0,
+       35,   29,   28,   32,   32,   32,   32,    4,   32,   32,
+       32,   34,    0,    8,   32,    2,   32,   32,    6,   32,
+        0,   29,    1,    9,   32,    7,    5,    0
 
     } ;
 
@@ -824,27 +824,27 @@ return(TASSIGN);
 case 28:
 YY_RULE_SETUP
 #line 38 "MiniC.l"
-print_error(1, yytext);
+return(TNUMBER);
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 39 "MiniC.l"
-return(TIDENT);
+return(TFLOATNUM);
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 40 "MiniC.l"
-return(TNUMBER);
+return(TINTNUM);
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 41 "MiniC.l"
-return(TFLOATNUM);
+print_error(1, yytext);
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 42 "MiniC.l"
-return(TINTNUM);
+return(TIDENT);
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
@@ -1786,6 +1786,5 @@ int main()
 
 
 int yywrap() {
-	printf("=== End of Lex ===\n");
 	return 1;
 }

@@ -22,45 +22,45 @@ void main()
 
 	while ((tn = yylex()) != TEOF) {
 		switch (tn) {
-		case TCONST:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TCONST", yytext); break;
-		case TELSE:      		printf("%d\t%s\t\t\t\t%s", lineNumber, "TELSE", yytext); break;
-		case TIF:        		printf("%d\t%s\t\t\t\t%s", lineNumber, "TIF", yytext); break;
-		case TINT:      	 	printf("%d\t%s\t\t\t\t%s", lineNumber, "TINT", yytext); break;
-		case TRETURN:  			printf("%d\t%s\t\t\t\t%s", lineNumber, "TRETURN", yytext); break;
-		case TVOID:      		printf("%d\t%s\t\t\t\t%s", lineNumber, "TVOID", yytext); break;
-		case TWHILE:   	 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TWHILE", yytext); break;
-		case TCHAR:				printf("%d\t%s\t\t\t\t%s", lineNumber, "TCHAR", yytext); break;
-		case TFLOAT:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TFLOAT", yytext); break;
-		case TEQUAL:    	 	printf("%d\t%s\t\t\t\t%s", lineNumber, "TEQUAL", yytext); break;
-		case TNOTEQU:  			printf("%d\t%s\t\t\t\t%s", lineNumber, "TNOTEQU", yytext); break;
-		case TLESSE:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TLESSE", yytext); break;
-		case TGREATE:   		printf("%d\t%s\t\t\t\t%s", lineNumber, "TGREATE", yytext); break;
-		case TAND:      		printf("%d\t%s\t\t\t\t%s", lineNumber, "TAND", yytext); break;
-		case TOR:        		printf("%d\t%s\t\t\t\t%s", lineNumber, "TOR", yytext); break;
-		case TINC:       		printf("%d\t%s\t\t\t\t%s", lineNumber, "TINC", yytext); break;
-		case TDEC:       		printf("%d\t%s\t\t\t\t%s", lineNumber, "TDEC", yytext); break;
-		case TADDASSIGN: 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TADDASSIGN", yytext); break;
-		case TSUBASSIGN: 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TSUBASSIGN", yytext); break;
-		case TMULASSIGN: 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TMULASSIGN", yytext); break;
-		case TDIVASSIGN: 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TDIVASSIGN", yytext); break;
-		case TMODASSIGN: 		printf("%d\t%s\t\t\t\t%s", lineNumber, "TMODASSIGN", yytext); break;
-		case TLPAREN:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TLPAREN", yytext); break;
-		case TRPAREN:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TRPAREN", yytext); break;
-		case TLBRACE:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TLBRACE", yytext); break;
-		case TRBRACE:     		printf("%d\t%s\t\t\t\t%s", lineNumber, "TRBRACE", yytext); break;
-		case TASSIGN:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TASSIGN", yytext); break;
+		case TELSE:      		printf("%-7d %-15s %-15s %s", lineNumber, "TELSE", "", yytext); break;
+		case TIF:        		printf("%-7d %-15s %-15s %s", lineNumber, "TIF", "", yytext); break;
+		case TINT:      	 	printf("%-7d %-15s %-15s %s", lineNumber, "TINT", "", yytext); break;
+		case TRETURN:  			printf("%-7d %-15s %-15s %s", lineNumber, "TRETURN", "", yytext); break;
+		case TVOID:      		printf("%-7d %-15s %-15s %s", lineNumber, "TVOID", "", yytext); break;
+		case TWHILE:   	 		printf("%-7d %-15s %-15s %s", lineNumber, "TWHILE", "", yytext); break;
+		case TCHAR:				printf("%-7d %-15s %-15s %s", lineNumber, "TCHAR", "", yytext); break;
+		case TFLOAT:			printf("%-7d %-15s %-15s %s", lineNumber, "TFLOAT", "", yytext); break;
+		case TEQUAL:    	 	printf("%-7d %-15s %-15s %s", lineNumber, "TEQUAL", "", yytext); break;
+		case TNOTEQU:  			printf("%-7d %-15s %-15s %s", lineNumber, "TNOTEQU", "", yytext); break;
+		case TCONST:			printf("%-7d %-15s %-15s %s", lineNumber, "TCONST", "", yytext); break;
+		case TLESSE:     		printf("%-7d %-15s %-15s %s", lineNumber, "TLESSE", "", yytext); break;
+		case TGREATE:   		printf("%-7d %-15s %-15s %s", lineNumber, "TGREATE", "", yytext); break;
+		case TAND:      		printf("%-7d %-15s %-15s %s", lineNumber, "TAND", "", yytext); break;
+		case TOR:        		printf("%-7d %-15s %-15s %s", lineNumber, "TOR", "", yytext); break;
+		case TINC:       		printf("%-7d %-15s %-15s %s", lineNumber, "TINC", "", yytext); break;
+		case TDEC:       		printf("%-7d %-15s %-15s %s", lineNumber, "TDEC", "", yytext); break;
+		case TADDASSIGN: 		printf("%-7d %-15s %-15s %s", lineNumber, "TADDASSIGN", "", yytext); break;
+		case TSUBASSIGN: 		printf("%-7d %-15s %-15s %s", lineNumber, "TSUBASSIGN", "", yytext); break;
+		case TMULASSIGN: 		printf("%-7d %-15s %-15s %s", lineNumber, "TMULASSIGN", "", yytext); break;
+		case TDIVASSIGN: 		printf("%-7d %-15s %-15s %s", lineNumber, "TDIVASSIGN", "", yytext); break;
+		case TMODASSIGN: 		printf("%-7d %-15s %-15s %s", lineNumber, "TMODASSIGN", "", yytext); break;
+		case TLPAREN:     		printf("%-7d %-15s %-15s %s", lineNumber, "TLPAREN", "", yytext); break;
+		case TRPAREN:     		printf("%-7d %-15s %-15s %s", lineNumber, "TRPAREN", "", yytext); break;
+		case TLBRACE:     		printf("%-7d %-15s %-15s %s", lineNumber, "TLBRACE", "", yytext); break;
+		case TRBRACE:     		printf("%-7d %-15s %-15s %s", lineNumber, "TRBRACE", "", yytext); break;
+		case TASSIGN:			printf("%-7d %-15s %-15s %s", lineNumber, "TASSIGN", "", yytext); break;
 		case TIDENT:			{ 
 								ST_index = process_sym_table(yytext);
-								if (ST_index != -1) {printf("%d\t%s\t\t%d\t\t%s", lineNumber, "TIDENT", ST_index, yytext);}
+								if (ST_index != -1) {printf("%-7d %-15s %-15d %s", lineNumber, "TIDENT", ST_index, yytext);}
 								}
 								break;
-		case TNUMBER:    		printf("%d\t%s\t\t\t\t%s", lineNumber, "TNUMBER", yytext); break;
-		case TSEMI:				printf("%d\t%s\t\t\t\t%s", lineNumber, "TSEMI", yytext); break;
-		case TSTRING:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TSTRING", yytext); break;
-		case TFLOATNUM:			printf("%d\t%s\t\t\t%s", lineNumber, "TFLOATNUM", yytext); break;
-		case TMUL:				printf("%d\t%s\t\t\t\t%s", lineNumber, "TMUL", yytext); break;
-		case TINTNUM:			printf("%d\t%s\t\t\t\t%s", lineNumber, "TINTNUM", yytext); break;
-		default:         		printf("%d\t%s\t\t\t\t%s", lineNumber, "?", yytext); break;
+		case TNUMBER:    		printf("%-7d %-15s %-15s %s", lineNumber, "TNUMBER", "", yytext); break;
+		case TSEMI:				printf("%-7d %-15s %-15s %s", lineNumber, "TSEMI", "", yytext); break;
+		case TSTRING:			printf("%-7d %-15s %-15s %s", lineNumber, "TSTRING", "", yytext); break;
+		case TFLOATNUM:			printf("%-7d %-15s %-15s %s", lineNumber, "TFLOATNUM", "", yytext); break;
+		case TMUL:				printf("%-7d %-15s %-15s %s", lineNumber, "TMUL", "", yytext); break;
+		case TINTNUM:			printf("%-7d %-15s %-15s %s", lineNumber, "TINTNUM", "", yytext); break;
+		default:         		printf("%-7d %-15s %-15s %s", lineNumber, "?", "", yytext); break;
 		}
 		printf("\n");
 	}
