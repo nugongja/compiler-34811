@@ -1,5 +1,0 @@
-apple banana carrot dog elephant fish
-grape_house _underscore good123 word15
-xray zebra mango 
-	tree sun moon star
-cloud computer vision network protocol signal

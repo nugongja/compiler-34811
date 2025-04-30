@@ -1,6 +1,0 @@
-apple123 @banana 123carrot &dog elephant!
-_valid_id invalid#name 
-
-				good-id okay one2three
-$money percent% illegal*char name!
-sdffffffffffffffffffffffffffffffffffffffff

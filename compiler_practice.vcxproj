@@ -127,7 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lex.yy.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="report_error.c" />
     <ClCompile Include="STMain.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
