@@ -133,6 +133,7 @@
     <ClCompile Include="STMain.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SymbolInfo.h" />
     <ClInclude Include="tn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

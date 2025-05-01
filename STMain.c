@@ -1,3 +1,4 @@
+#include "SymbolInfo.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -30,6 +31,7 @@ typedef struct HTentry {
 HTpointer HT[HASH_TABLE_SIZE];
 
 
+// 함수 선언
 void printSymbolTable(void);
 int divisionMethod(char* str, int tableSize);
 HTpointer lookup_hash_table(int id_index, int hscode);
@@ -42,38 +44,42 @@ extern void print_error(int error_num, char* identifier);
 
 
 
-// == main function ==
-int process_sym_table(char* identifier) {			
+SymbolInfo process_sym_table(char* identifier) {
+	SymbolInfo info;
+	info.success = -1;  // 기본값은 실패
 
 	/* string pool overflow (5) */
 	if (index_start + strlen(identifier) + 1 >= STR_POOL_SIZE) {
 		print_error(5, identifier);
-		return -1;
+		return info;
 	}
 
 	strcpy_s(str_pool + index_start, STR_POOL_SIZE - index_start,identifier);
 
+
 	/* long identifier (2) */
 	if (strlen(identifier) > STR_LEN_SIZE) {
 		print_error(2, identifier);
-		return -1;
+		return info;
 	}
 
 	/* symbol table overflow (4) */
 	if (sym_id >= SYM_TABLE_SIZE) {
 		print_error(4, identifier);
-		return -1;
+		return info;
 	}
 
 
 	// 해시값 계산
 	int hash_value = divisionMethod(str_pool + index_start, HASH_TABLE_SIZE);
 
+
 	// 식별자 중복 여부 확인
 	HTpointer htp = lookup_hash_table(index_start, hash_value);
 	if (htp != NULL) {
-		printf("%-7d %-15s %-15d %s (already exists)", lineNumber, "TIDENT", htp->id, identifier);
-		return -1;
+		printf("%-7d %-15s %s (already exists)\n", lineNumber, "TIDENT",identifier);
+		printf("%-26s -> ST-ID: %-3d | PoolIdx: %-3d | Len: %-2d | Hash: %-3d", "", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
+		return info;
 	}
 	else {
 		// 중복이 아니면 심볼 테이블에 추가
@@ -84,16 +90,20 @@ int process_sym_table(char* identifier) {
 		sym_id++;
 	}
 
+	info.id = symbol_table[sym_id - 1][0];
+	info.index = symbol_table[sym_id - 1][1];
+	info.length = symbol_table[sym_id - 1][2];
+	info.hash_code = hash_value;
+	info.success = 1;
+
 	index_start += strlen(identifier);
 	str_pool[index_start++] = '\0';
 
-	return symbol_table[sym_id-1][0];
+	return info;
 }
 
 
 
-
-// == symbol table function ==
 
 /* printSymbolTable()
 * 심볼 테이블 출력 함수
@@ -113,7 +123,6 @@ void printSymbolTable() {
 
 
 
-// == hash table function ==
 /* divisionMethod()
 * hash code 계산 (제산법)
 *

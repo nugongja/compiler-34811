@@ -7,7 +7,7 @@ void print_error(int error_num, char* identifier)
 	{
 	case 1:
 		/* start with digit */
-		printf("Error - Start with digit (%s)\n", identifier);
+		printf("Error - Start with digit (%s)", identifier);
 		break;
 	case 2:
 		/* long identifier*/
@@ -15,7 +15,7 @@ void print_error(int error_num, char* identifier)
 		break;
 	case 3:
 		/* illegal identifier */
-		printf("Error - Illegal identifier (%s)\n", identifier);
+		printf("Error - Invalid character (%s)", identifier);
 		break;
 	case 4:
 		/* symbol table overflow */
@@ -28,6 +28,15 @@ void print_error(int error_num, char* identifier)
 	case 6:
 		/* hash table overflow */
 		printf("Error - Hash table overflow. Cannot store (%s)", identifier);
+		break;
+	case 7:
+		printf("Error - Invalid Hex (%s)", identifier);
+		break;
+	case 8:
+		printf("Error - Invalid Octal (%s)", identifier);
+		break;
+	case 9:
+		printf("Error - Invalid character (%s)", identifier);
 		break;
 	default:
 		printf("Error - Unknown (%s)", identifier);
