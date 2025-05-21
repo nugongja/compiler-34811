@@ -15,7 +15,7 @@
 
 char separators[] = " ,;\t\n\r\n";
 char str_pool[STR_POOL_SIZE];																// 문자열 저장 배열
-int symbol_table[SYM_TABLE_SIZE][3];														// ID, Index, Length
+int symbol_table[SYM_TABLE_SIZE][4];														// ID, Index, Length, 
 int sym_id = 0;																				// symbol table에 저장된 요소의 개수
 int index_start = 0;
 extern line_num;
@@ -73,7 +73,7 @@ int process_sym_table(char* identifier) {
 	HTpointer htp = lookup_hash_table(index_start, hash_value);
 	if (htp != NULL) {
 		printf("%-7d %-15s %-15s", line_num, "TIDENT",identifier);
-		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
+		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]\n", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
 	}
 	else {
 		// 중복이 아니면 심볼 테이블에 추가
@@ -91,6 +91,10 @@ int process_sym_table(char* identifier) {
 	return symbol_table[sym_id - 1][0];														// 심볼 테이블에 저장된 ID 반환
 }
 
+void update_sym_table(int sym_id, int attr_idx, int attr_value) {
+	symbol_table[sym_id-1][attr_idx+3] = attr_value;
+}
+
 
 
 
@@ -103,9 +107,9 @@ int process_sym_table(char* identifier) {
 */
 void printSymbolTable() {
 	printf("\n\nSymbol Table:\n");					
-	printf("ID\tIndex\tLength\tSymbol\n");
+	printf("ID\tIndex\tLength\tSymbol\tAttributes\n");
 	for (int i = 0; i < sym_id; i++) {
-		printf("%d\t%d\t%d\t%s\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], str_pool + symbol_table[i][1]);
+		printf("%d\t%d\t%d\t%s\t%d\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], str_pool + symbol_table[i][1], symbol_table[i][3]);
 	}
 	printf("\n");
 }
@@ -240,6 +244,8 @@ void init_sym_table() {
 	for (i = 0; i < SYM_TABLE_SIZE; i++) {
 		symbol_table[i][0] = -1;
 		symbol_table[i][1] = -1;
+		symbol_table[i][2] = -1;
+		symbol_table[i][3] = -1;
 	}
 }
 

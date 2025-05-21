@@ -5,6 +5,9 @@
 
 /*yacc source for Mini C*/
 void semantic(int);
+extern void update_sym_table(int, int, int);
+int current_type;
+extern int st_index;
 %}
 
 %token TCONST TELSE TIF TINT TRETURN TVOID TWHILE 
@@ -17,7 +20,6 @@ void semantic(int);
 
 %nonassoc TLOWERTHANELSE
 %nonassoc TELSE
-
 %%
 mini_c 			: translation_unit				{semantic(1);};
 translation_unit 	: external_dcl					{semantic(2);}
@@ -25,15 +27,15 @@ translation_unit 	: external_dcl					{semantic(2);}
 external_dcl 		: function_def					{semantic(4);}
 		  	| declaration					{semantic(5);};
 function_def 		: function_header compound_st		{semantic(6);};
-function_header 	: dcl_spec function_name formal_param	{semantic(7);};
+function_header 	: dcl_spec function_name formal_param	{update_sym_table(st_index, 0, current_type); semantic(7);};
 dcl_spec 		: dcl_specifiers				{semantic(8);};
 dcl_specifiers 		: dcl_specifier					{semantic(9);}
 		 	| dcl_specifiers dcl_specifier			{semantic(10);};
 dcl_specifier 		: type_qualifier					{semantic(11);}
 			| type_specifier				{semantic(12);};
 type_qualifier 		: TCONST					{semantic(13);};
-type_specifier 		: TINT						{semantic(14);}
-		 	| TVOID						{semantic(15);};
+type_specifier 		: TINT						{current_type = 0; semantic(14);}
+		 	| TVOID						{current_type = 1; semantic(15);};
 function_name 	: TIDENT						{semantic(16);};
 formal_param 		: TLPAREN opt_formal_param TRPAREN 			{semantic(17);};
 opt_formal_param 	: formal_param_list				{semantic(18);}
