@@ -27,12 +27,18 @@
     <ClCompile Include="report_error.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="parser_tab.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tn.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="SymbolInfo.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="parser_tab.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,8 +18,8 @@ char str_pool[STR_POOL_SIZE];																// 문자열 저장 배열
 int symbol_table[SYM_TABLE_SIZE][3];														// ID, Index, Length
 int sym_id = 0;																				// symbol table에 저장된 요소의 개수
 int index_start = 0;
-extern lineNumber;
-
+extern line_num;
+																													
 
 // 해시 테이블 정의
 typedef struct HTentry* HTpointer;
@@ -44,14 +44,11 @@ extern void print_error(int error_num, char* identifier);
 
 
 
-SymbolInfo process_sym_table(char* identifier) {
-	SymbolInfo info;
-	info.success = -1;  // 기본값은 실패
+int process_sym_table(char* identifier) {
 
 	/* string pool overflow (5) */
 	if (index_start + strlen(identifier) + 1 >= STR_POOL_SIZE) {
 		print_error(5, identifier);
-		return info;
 	}
 
 	strcpy_s(str_pool + index_start, STR_POOL_SIZE - index_start,identifier);
@@ -60,13 +57,11 @@ SymbolInfo process_sym_table(char* identifier) {
 	/* long identifier (2) */
 	if (strlen(identifier) > STR_LEN_SIZE) {
 		print_error(2, identifier);
-		return info;
 	}
 
 	/* symbol table overflow (4) */
 	if (sym_id >= SYM_TABLE_SIZE) {
 		print_error(4, identifier);
-		return info;
 	}
 
 
@@ -77,9 +72,8 @@ SymbolInfo process_sym_table(char* identifier) {
 	// 식별자 중복 여부 확인
 	HTpointer htp = lookup_hash_table(index_start, hash_value);
 	if (htp != NULL) {
-		printf("%-7d %-15s %s (already exists)\n", lineNumber, "TIDENT",identifier);
-		printf("%-26s -> ST-ID: %-3d | PoolIdx: %-3d | Len: %-2d | Hash: %-3d", "", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
-		return info;
+		printf("%-7d %-15s %-15s", line_num, "TIDENT",identifier);
+		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
 	}
 	else {
 		// 중복이 아니면 심볼 테이블에 추가
@@ -90,16 +84,11 @@ SymbolInfo process_sym_table(char* identifier) {
 		sym_id++;
 	}
 
-	info.id = symbol_table[sym_id - 1][0];
-	info.index = symbol_table[sym_id - 1][1];
-	info.length = symbol_table[sym_id - 1][2];
-	info.hash_code = hash_value;
-	info.success = 1;
 
 	index_start += strlen(identifier);
 	str_pool[index_start++] = '\0';
 
-	return info;
+	return symbol_table[sym_id - 1][0];														// 심볼 테이블에 저장된 ID 반환
 }
 
 

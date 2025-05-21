@@ -129,10 +129,12 @@
   <ItemGroup>
     <ClCompile Include="lex.yy.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="parser_tab.c" />
     <ClCompile Include="report_error.c" />
     <ClCompile Include="STMain.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="parser_tab.h" />
     <ClInclude Include="SymbolInfo.h" />
     <ClInclude Include="tn.h" />
   </ItemGroup>
