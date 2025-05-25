@@ -773,7 +773,7 @@ return(TMOD);
 case 7:
 YY_RULE_SETUP
 #line 18 "MiniC.l"
-{printf("%s\n", yytext); return(TCONST);}
+{return(TCONST);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
@@ -788,7 +788,7 @@ return(TIF);
 case 10:
 YY_RULE_SETUP
 #line 21 "MiniC.l"
-{printf("%s\n", yytext); return(TINT);}
+{return(TINT);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
@@ -868,7 +868,7 @@ return(TDEC);
 case 26:
 YY_RULE_SETUP
 #line 37 "MiniC.l"
-{printf("%s\n", yytext); return(TASSIGN);}
+{return(TASSIGN);}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
@@ -898,17 +898,17 @@ return(TMODASSIGN);
 case 32:
 YY_RULE_SETUP
 #line 43 "MiniC.l"
-return TLPAREN;
+{return TLPAREN;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 44 "MiniC.l"
-return TRPAREN;
+{return TRPAREN;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 45 "MiniC.l"
-return TLBRACE;
+{return TLBRACE;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
@@ -964,7 +964,6 @@ case 45:
 YY_RULE_SETUP
 #line 56 "MiniC.l"
 {
-									printf("%s\n", yytext);
 									if(yyleng>15) { 
 									print_error(2, yytext); return(TERROR); }
 									else {
@@ -973,60 +972,60 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 63 "MiniC.l"
+#line 62 "MiniC.l"
 return(TSTRING);
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 64 "MiniC.l"
+#line 63 "MiniC.l"
 for(int i=0;i<yyleng;i++) { if(yytext[i] == '\n') line_num++; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 65 "MiniC.l"
+#line 64 "MiniC.l"
 ;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 66 "MiniC.l"
+#line 65 "MiniC.l"
 ;
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 67 "MiniC.l"
+#line 66 "MiniC.l"
 line_num++;
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 68 "MiniC.l"
+#line 67 "MiniC.l"
 {print_error(7, yytext); return(TERROR);}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 69 "MiniC.l"
+#line 68 "MiniC.l"
 {print_error(8, yytext); return(TERROR);}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 70 "MiniC.l"
+#line 69 "MiniC.l"
 {print_error(8, yytext); return(TERROR);}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 71 "MiniC.l"
+#line 70 "MiniC.l"
 {print_error(9, yytext); return(TERROR);}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 72 "MiniC.l"
+#line 71 "MiniC.l"
 {print_error(3, yytext); return(TERROR);}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 73 "MiniC.l"
+#line 72 "MiniC.l"
 ECHO;
 	YY_BREAK
-#line 1030 "lex.yy.c"
+#line 1029 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1912,7 +1911,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 73 "MiniC.l"
+#line 72 "MiniC.l"
 
 
 int yywrap() {

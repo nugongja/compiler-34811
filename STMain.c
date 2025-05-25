@@ -15,10 +15,11 @@
 
 char separators[] = " ,;\t\n\r\n";
 char str_pool[STR_POOL_SIZE];																// 문자열 저장 배열
-int symbol_table[SYM_TABLE_SIZE][4];														// ID, Index, Length, 
+SymbolInfo symbol_table[SYM_TABLE_SIZE];														// ID, Index, Length, 
 int sym_id = 0;																				// symbol table에 저장된 요소의 개수
 int index_start = 0;
 extern line_num;
+
 																													
 
 // 해시 테이블 정의
@@ -32,6 +33,8 @@ HTpointer HT[HASH_TABLE_SIZE];
 
 
 // 함수 선언
+int process_sym_table(char* identifier);
+void update_sym_table(int sym_id, int lineno, const char* type, const char* kind);
 void printSymbolTable(void);
 int divisionMethod(char* str, int tableSize);
 HTpointer lookup_hash_table(int id_index, int hscode);
@@ -65,6 +68,8 @@ int process_sym_table(char* identifier) {
 	}
 
 
+	SymbolInfo* sym = &symbol_table[sym_id];
+
 	// 해시값 계산
 	int hash_value = divisionMethod(str_pool + index_start, HASH_TABLE_SIZE);
 
@@ -73,28 +78,33 @@ int process_sym_table(char* identifier) {
 	HTpointer htp = lookup_hash_table(index_start, hash_value);
 	if (htp != NULL) {
 		printf("%-7d %-15s %-15s", line_num, "TIDENT",identifier);
-		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]\n", symbol_table[htp->id - 1][0], symbol_table[htp->id - 1][1], symbol_table[htp->id - 1][2], hash_value);
+		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]\n", symbol_table[htp->id - 1].id, symbol_table[htp->id - 1].index, symbol_table[htp->id - 1].length, hash_value);
 	}
 	else {
 		// 중복이 아니면 심볼 테이블에 추가
-		symbol_table[sym_id][0] = sym_id + 1;
-		symbol_table[sym_id][1] = index_start;
-		symbol_table[sym_id][2] = (int)strlen(str_pool + index_start);
-		add_hash_table(symbol_table[sym_id][0], index_start, hash_value);							// 해시 테이블에는 string_pool index만 저장
+		sym->id = sym_id + 1;
+		sym->index = index_start;
+		sym->length = (int)strlen(str_pool + index_start);
+		sym->hash_code = hash_value;
+		sym->lineno = line_num;														// 현재 라인 번호 저장
+		add_hash_table(sym->id, index_start, hash_value);							// 해시 테이블에는 string_pool index만 저장
 		sym_id++;
 	}
-
 
 	index_start += strlen(identifier);
 	str_pool[index_start++] = '\0';
 
-	return symbol_table[sym_id - 1][0];														// 심볼 테이블에 저장된 ID 반환
+	return sym->id;														// 심볼 테이블에 저장된 ID 반환
 }
 
-void update_sym_table(int sym_id, int attr_idx, int attr_value) {
-	symbol_table[sym_id-1][attr_idx+3] = attr_value;
+/* update_sym_table()
+* 심볼 테이블의 특정 심볼의 속성을 업데이트하는 함수
+*/
+void update_sym_table(int sym_id, int lineno, const char* type, const char* kind) {
+	symbol_table[sym_id - 1].lineno = lineno;										
+	strcpy(symbol_table[sym_id - 1].type, type);
+	strcpy(symbol_table[sym_id - 1].kind, kind);
 }
-
 
 
 
@@ -109,7 +119,24 @@ void printSymbolTable() {
 	printf("\n\nSymbol Table:\n");					
 	printf("ID\tIndex\tLength\tSymbol\tAttributes\n");
 	for (int i = 0; i < sym_id; i++) {
-		printf("%d\t%d\t%d\t%s\t%d\n", symbol_table[i][0], symbol_table[i][1], symbol_table[i][2], str_pool + symbol_table[i][1], symbol_table[i][3]);
+		SymbolInfo* sym = &symbol_table[i];
+		printf("%d\t%d\t%d\t%s\t", sym->id, sym->index, sym->length, str_pool + sym->index);
+		
+		// 공통 속성 출력
+		printf("%s %s, line %d", sym->type, sym->kind, sym->lineno);
+
+		// 함수라면 파라미터 추가 출력
+		if (strcmp(sym->kind, "function") == 0) {
+			printf(", params: ");
+			for (int j = 0; j < sym->param_count; j++) {
+				printf("%s", sym->param_types[j]);
+				if (j < sym->param_count - 1) {
+					printf(", ");
+				}
+			}
+		}
+
+		printf("\n");
 	}
 	printf("\n");
 }
@@ -242,10 +269,15 @@ void printHashTable() {
 void init_sym_table() {
 	int i;
 	for (i = 0; i < SYM_TABLE_SIZE; i++) {
-		symbol_table[i][0] = -1;
-		symbol_table[i][1] = -1;
-		symbol_table[i][2] = -1;
-		symbol_table[i][3] = -1;
+		symbol_table[i].id = -1;
+		symbol_table[i].index = -1;
+		symbol_table[i].length = -1;
+		symbol_table[i].hash_code = -1;
+		symbol_table[i].lineno = -1;
+		symbol_table[i].type[0] = '\0';  // 자료형 초기화
+		symbol_table[i].kind[0] = '\0';  // 종류 초기화
+		symbol_table[i].param_count = 0; // 함수의 파라미터 개수 초기화
+		symbol_table[i].param_types[0][0] = '\0'; // 함수의 파라미터 유형 초기화
 	}
 }
 

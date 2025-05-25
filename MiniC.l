@@ -15,10 +15,10 @@ int st_index = 0;
 "*"								return(TMUL);
 "/"								return(TDIV);
 "%"								return(TMOD);
-"const"							{printf("%s\n", yytext); return(TCONST);}
+"const"							{return(TCONST);}
 "else"								return(TELSE);
 "if"								return(TIF);
-"int"								{printf("%s\n", yytext); return(TINT);}
+"int"								{return(TINT);}
 "char"							return(TCHAR);
 "float"							return(TFLOAT);
 "return"							return(TRETURN);
@@ -34,15 +34,15 @@ int st_index = 0;
 "||"								return(TOR);
 "++"								return(TINC);
 "--"								return(TDEC);
-"="								{printf("%s\n", yytext); return(TASSIGN);}
+"="								{return(TASSIGN);}
 "+="								return(TADDASSIGN);
 "-="								return(TSUBASSIGN);
 "*="								return(TMULASSIGN);
 "/="								return(TDIVASSIGN);
 "%="								return(TMODASSIGN);
-"("								return TLPAREN;
-")"								return TRPAREN;
-"{"								return TLBRACE;
+"("								{return TLPAREN;}
+")"								{return TRPAREN;}
+"{"								{return TLBRACE;}
 "}"								return TRBRACE;
 "["								return TLSQUARE;
 "]"								return TRSQUARE;
@@ -54,7 +54,6 @@ int st_index = 0;
 [+-]?([0-9]+"."[0-9]+(e[+-]?[0-9]+)?)			return(TFLOATNUM);
 [0-9]+[A-Za-z0-9_]+						{print_error(1, yytext); return(TERROR);}
 [A-Za-z_][A-Za-z0-9_]*						{
-									printf("%s\n", yytext);
 									if(yyleng>15) { 
 									print_error(2, yytext); return(TERROR); }
 									else {
