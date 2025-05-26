@@ -194,15 +194,15 @@ static const short yyrhs[] = {    55,
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
     30,    31,    32,    33,    34,    36,    37,    41,    42,    43,
-    44,    45,    46,    47,    48,    49,    50,    55,    56,    57,
-    58,    59,    60,    61,    62,    63,    64,    65,    66,    67,
-    68,    69,    73,    77,    81,    85,    86,    87,    88,    89,
-    90,    91,    92,    93,    94,    95,    97,    98,    99,   100,
-   101,   102,   103,   104,   105,   106,   107,   108,   109,   110,
-   111,   113,   114,   115,   116,   117,   118,   119,   120,   121,
-   122,   123,   124,   125,   126,   127,   128,   129,   130,   131,
-   132,   133,   134,   135,   136,   137,   138,   139,   140,   141,
-   142,   143,   144,   145,   146,   147,   148,   149
+    44,    45,    46,    47,    48,    49,    50,    54,    55,    56,
+    57,    58,    59,    62,    63,    64,    65,    66,    67,    68,
+    69,    70,    74,    78,    82,    86,    87,    88,    89,    90,
+    91,    92,    93,    94,    95,    96,    98,    99,   100,   101,
+   102,   103,   104,   105,   106,   107,   108,   109,   110,   111,
+   112,   114,   115,   116,   117,   118,   119,   120,   121,   122,
+   123,   124,   125,   126,   127,   128,   129,   130,   131,   132,
+   133,   134,   135,   136,   137,   138,   139,   140,   141,   142,
+   143,   144,   145,   146,   147,   148,   149,   150
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","TCONST",
@@ -907,345 +907,346 @@ case 16:
 case 17:
 #line 50 "parser.y"
 {
-										printf(">> 함수 이름: %s (st_index=%d)\n", yytext, st_index); // 디버깅용
 										func_name_index = st_index;
 										semantic(16);
 										;
     break;}
 case 18:
-#line 55 "parser.y"
+#line 54 "parser.y"
 {semantic(17);;
     break;}
 case 19:
-#line 56 "parser.y"
+#line 55 "parser.y"
 {semantic(18);;
     break;}
 case 20:
-#line 57 "parser.y"
+#line 56 "parser.y"
 {semantic(19);;
     break;}
 case 21:
-#line 58 "parser.y"
+#line 57 "parser.y"
 {semantic(20);;
     break;}
 case 22:
-#line 59 "parser.y"
+#line 58 "parser.y"
 {semantic(21);;
     break;}
 case 23:
-#line 60 "parser.y"
-{semantic(22);;
+#line 59 "parser.y"
+{
+										update_sym_table(st_index, line_num, current_type, current_kind);
+										semantic(22);;
     break;}
 case 24:
-#line 61 "parser.y"
+#line 62 "parser.y"
 {semantic(23);;
     break;}
 case 25:
-#line 62 "parser.y"
+#line 63 "parser.y"
 {semantic(24);;
     break;}
 case 26:
-#line 63 "parser.y"
+#line 64 "parser.y"
 {semantic(25);;
     break;}
 case 27:
-#line 64 "parser.y"
+#line 65 "parser.y"
 {semantic(26);;
     break;}
 case 28:
-#line 65 "parser.y"
+#line 66 "parser.y"
 {semantic(27);;
     break;}
 case 29:
-#line 66 "parser.y"
+#line 67 "parser.y"
 {semantic(28);;
     break;}
 case 30:
-#line 67 "parser.y"
+#line 68 "parser.y"
 {semantic(29);;
     break;}
 case 31:
-#line 68 "parser.y"
+#line 69 "parser.y"
 {semantic(30);;
     break;}
 case 32:
-#line 69 "parser.y"
+#line 70 "parser.y"
 {
 										update_sym_table(st_index, line_num, current_type, current_kind);
 										semantic(31);
 										;
     break;}
 case 33:
-#line 73 "parser.y"
+#line 74 "parser.y"
 {
 										update_sym_table(st_index, line_num, current_type, current_kind);
 										semantic(32);
 										;
     break;}
 case 34:
-#line 77 "parser.y"
+#line 78 "parser.y"
 {
 										current_kind = "scalar";
 										semantic(33);
 										;
     break;}
 case 35:
-#line 81 "parser.y"
+#line 82 "parser.y"
 {
 										current_kind = "array";
 										semantic(34);
 										;
     break;}
 case 36:
-#line 85 "parser.y"
+#line 86 "parser.y"
 {semantic(35);;
     break;}
 case 37:
-#line 86 "parser.y"
+#line 87 "parser.y"
 {semantic(36);;
     break;}
 case 38:
-#line 87 "parser.y"
+#line 88 "parser.y"
 {semantic(37);;
     break;}
 case 39:
-#line 88 "parser.y"
+#line 89 "parser.y"
 {semantic(38);;
     break;}
 case 40:
-#line 89 "parser.y"
+#line 90 "parser.y"
 {semantic(39);;
     break;}
 case 41:
-#line 90 "parser.y"
+#line 91 "parser.y"
 {semantic(40);;
     break;}
 case 42:
-#line 91 "parser.y"
+#line 92 "parser.y"
 {semantic(41);;
     break;}
 case 43:
-#line 92 "parser.y"
+#line 93 "parser.y"
 {semantic(42);;
     break;}
 case 44:
-#line 93 "parser.y"
+#line 94 "parser.y"
 {semantic(43);;
     break;}
 case 45:
-#line 94 "parser.y"
+#line 95 "parser.y"
 {semantic(44);;
     break;}
 case 46:
-#line 95 "parser.y"
+#line 96 "parser.y"
 {semantic(45);;
     break;}
 case 47:
-#line 97 "parser.y"
+#line 98 "parser.y"
 {semantic(46);;
     break;}
 case 48:
-#line 98 "parser.y"
+#line 99 "parser.y"
 {semantic(47);;
     break;}
 case 49:
-#line 99 "parser.y"
+#line 100 "parser.y"
 {semantic(48);;
     break;}
 case 50:
-#line 100 "parser.y"
+#line 101 "parser.y"
 {semantic(49);;
     break;}
 case 51:
-#line 101 "parser.y"
+#line 102 "parser.y"
 {semantic(50);;
     break;}
 case 52:
-#line 102 "parser.y"
+#line 103 "parser.y"
 {semantic(51);;
     break;}
 case 53:
-#line 103 "parser.y"
+#line 104 "parser.y"
 {semantic(52);;
     break;}
 case 54:
-#line 104 "parser.y"
+#line 105 "parser.y"
 {semantic(53);;
     break;}
 case 55:
-#line 105 "parser.y"
+#line 106 "parser.y"
 {semantic(54);;
     break;}
 case 56:
-#line 106 "parser.y"
+#line 107 "parser.y"
 {semantic(55);;
     break;}
 case 57:
-#line 107 "parser.y"
+#line 108 "parser.y"
 {semantic(56);;
     break;}
 case 58:
-#line 108 "parser.y"
+#line 109 "parser.y"
 {semantic(57);;
     break;}
 case 59:
-#line 109 "parser.y"
+#line 110 "parser.y"
 {semantic(58);;
     break;}
 case 60:
-#line 110 "parser.y"
+#line 111 "parser.y"
 {semantic(59);;
     break;}
 case 61:
-#line 111 "parser.y"
+#line 112 "parser.y"
 {semantic(60);;
     break;}
 case 62:
-#line 113 "parser.y"
+#line 114 "parser.y"
 {semantic(61);;
     break;}
 case 63:
-#line 114 "parser.y"
+#line 115 "parser.y"
 {semantic(62);;
     break;}
 case 64:
-#line 115 "parser.y"
+#line 116 "parser.y"
 {semantic(63);;
     break;}
 case 65:
-#line 116 "parser.y"
+#line 117 "parser.y"
 {semantic(64);;
     break;}
 case 66:
-#line 117 "parser.y"
+#line 118 "parser.y"
 {semantic(65);;
     break;}
 case 67:
-#line 118 "parser.y"
+#line 119 "parser.y"
 {semantic(66);;
     break;}
 case 68:
-#line 119 "parser.y"
+#line 120 "parser.y"
 {semantic(67);;
     break;}
 case 69:
-#line 120 "parser.y"
+#line 121 "parser.y"
 {semantic(68);;
     break;}
 case 70:
-#line 121 "parser.y"
+#line 122 "parser.y"
 {semantic(69);;
     break;}
 case 71:
-#line 122 "parser.y"
+#line 123 "parser.y"
 {semantic(70);;
     break;}
 case 72:
-#line 123 "parser.y"
+#line 124 "parser.y"
 {semantic(71);;
     break;}
 case 73:
-#line 124 "parser.y"
+#line 125 "parser.y"
 {semantic(72);;
     break;}
 case 74:
-#line 125 "parser.y"
+#line 126 "parser.y"
 {semantic(73);;
     break;}
 case 75:
-#line 126 "parser.y"
+#line 127 "parser.y"
 {semantic(74);;
     break;}
 case 76:
-#line 127 "parser.y"
+#line 128 "parser.y"
 {semantic(75);;
     break;}
 case 77:
-#line 128 "parser.y"
+#line 129 "parser.y"
 {semantic(76);;
     break;}
 case 78:
-#line 129 "parser.y"
+#line 130 "parser.y"
 {semantic(77);;
     break;}
 case 79:
-#line 130 "parser.y"
+#line 131 "parser.y"
 {semantic(78);;
     break;}
 case 80:
-#line 131 "parser.y"
+#line 132 "parser.y"
 {semantic(79);;
     break;}
 case 81:
-#line 132 "parser.y"
+#line 133 "parser.y"
 {semantic(80);;
     break;}
 case 82:
-#line 133 "parser.y"
+#line 134 "parser.y"
 {semantic(81);;
     break;}
 case 83:
-#line 134 "parser.y"
+#line 135 "parser.y"
 {semantic(82);;
     break;}
 case 84:
-#line 135 "parser.y"
+#line 136 "parser.y"
 {semantic(83);;
     break;}
 case 85:
-#line 136 "parser.y"
+#line 137 "parser.y"
 {semantic(84);;
     break;}
 case 86:
-#line 137 "parser.y"
+#line 138 "parser.y"
 {semantic(85);;
     break;}
 case 87:
-#line 138 "parser.y"
+#line 139 "parser.y"
 {semantic(86);;
     break;}
 case 88:
-#line 139 "parser.y"
+#line 140 "parser.y"
 {semantic(87);;
     break;}
 case 89:
-#line 140 "parser.y"
+#line 141 "parser.y"
 {semantic(88);;
     break;}
 case 90:
-#line 141 "parser.y"
+#line 142 "parser.y"
 {semantic(89);;
     break;}
 case 91:
-#line 142 "parser.y"
+#line 143 "parser.y"
 {semantic(90);;
     break;}
 case 92:
-#line 143 "parser.y"
+#line 144 "parser.y"
 {semantic(91);;
     break;}
 case 93:
-#line 144 "parser.y"
+#line 145 "parser.y"
 {semantic(92);;
     break;}
 case 94:
-#line 145 "parser.y"
+#line 146 "parser.y"
 {semantic(93);;
     break;}
 case 95:
-#line 146 "parser.y"
+#line 147 "parser.y"
 {semantic(94);;
     break;}
 case 96:
-#line 147 "parser.y"
+#line 148 "parser.y"
 {semantic(95);;
     break;}
 case 97:
-#line 148 "parser.y"
+#line 149 "parser.y"
 {semantic(96);;
     break;}
 case 98:
-#line 149 "parser.y"
+#line 150 "parser.y"
 {semantic(97);;
     break;}
 }
@@ -1446,7 +1447,7 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 150 "parser.y"
+#line 151 "parser.y"
 
 
 void semantic(int n)

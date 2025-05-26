@@ -79,6 +79,8 @@ int process_sym_table(char* identifier) {
 	if (htp != NULL) {
 		printf("%-7d %-15s %-15s", line_num, "TIDENT",identifier);
 		printf(" (already exists) [ST-ID:%d|PoolIdx:%d|Len:%d|Hash:%d]\n", symbol_table[htp->id - 1].id, symbol_table[htp->id - 1].index, symbol_table[htp->id - 1].length, hash_value);
+
+		return symbol_table[htp->id - 1].id;				// 중복된 심볼이므로 기존 ID 반환
 	}
 	else {
 		// 중복이 아니면 심볼 테이블에 추가

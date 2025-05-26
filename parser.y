@@ -48,7 +48,6 @@ type_specifier 	: TINT							{strcpy(type_buffer, current_qualifier ? "const int
 			| TFLOAT						{strcpy(type_buffer, current_qualifier ? "const float" : "float"); current_qualifier = NULL; semantic(14);}	
 		 	| TVOID						{strcpy(type_buffer, current_qualifier ? "const void" : "void"); current_qualifier = NULL; semantic(15);};
 function_name 	: TIDENT						{
-										printf(">> 함수 이름: %s (st_index=%d)\n", yytext, st_index); // 디버깅용
 										func_name_index = st_index;
 										semantic(16);
 										};
@@ -57,7 +56,9 @@ opt_formal_param 	: formal_param_list					{semantic(18);}
 		   	|							{semantic(19);};
 formal_param_list 	: param_dcl						{semantic(20);}
 		    	| formal_param_list TCOMMA param_dcl 	{semantic(21);};
-param_dcl 		: dcl_spec declarator				{semantic(22);};
+param_dcl 		: dcl_spec declarator				{
+										update_sym_table(st_index, line_num, current_type, current_kind);
+										semantic(22);};
 compound_st 	: TLBRACE opt_dcl_list opt_stat_list TRBRACE 	{semantic(23);};
 opt_dcl_list 		: declaration_list					{semantic(24);}
 			|							{semantic(25);};
