@@ -35,6 +35,7 @@ HTpointer HT[HASH_TABLE_SIZE];
 // 함수 선언
 int process_sym_table(char* identifier);
 void update_sym_table(int sym_id, int lineno, const char* type, const char* kind);
+void set_param_info(int sym_id, const char* param_str, int count);
 void printSymbolTable(void);
 int divisionMethod(char* str, int tableSize);
 HTpointer lookup_hash_table(int id_index, int hscode);
@@ -101,11 +102,30 @@ int process_sym_table(char* identifier) {
 
 /* update_sym_table()
 * 심볼 테이블의 특정 심볼의 속성을 업데이트하는 함수
+* 
+* Args:
+* sym_id - 업데이트할 심볼의 ID
+* lineno - 심볼이 정의된 라인 번호
+* type - 심볼의 타입 (int, float, char 등)
+* kind - 심볼의 종류 (scalar, array, function 등)
 */
 void update_sym_table(int sym_id, int lineno, const char* type, const char* kind) {
 	symbol_table[sym_id - 1].lineno = lineno;										
 	strcpy(symbol_table[sym_id - 1].type, type);
 	strcpy(symbol_table[sym_id - 1].kind, kind);
+}
+
+/* set_param_info()
+* 심볼이 함수인 경우, 함수의 파라미터 정보를 설정하는 함수
+* 
+* Args:	
+* sym_id - 함수 심볼의 ID
+* param_str - 파라미터 문자열 (예: "int a, float b")
+* count - 파라미터 개수
+*/
+void set_param_info(int sym_id, const char* param_str, int count) {
+	strcpy(symbol_table[sym_id - 1].params, param_str);	// 함수의 파라미터 설정
+	symbol_table[sym_id - 1].params_count = count;		// 파라미터 개수 설정
 }
 
 
@@ -119,23 +139,19 @@ void update_sym_table(int sym_id, int lineno, const char* type, const char* kind
 */
 void printSymbolTable() {
 	printf("\n\nSymbol Table:\n");					
-	printf("ID\tIndex\tLength\tSymbol\tAttributes\n");
+	printf("ID\tIndex\tLength\tSymbol\t\tAttributes\n");
 	for (int i = 0; i < sym_id; i++) {
 		SymbolInfo* sym = &symbol_table[i];
-		printf("%d\t%d\t%d\t%s\t", sym->id, sym->index, sym->length, str_pool + sym->index);
+		printf("%d\t%d\t%d\t%s\t\t", sym->id, sym->index, sym->length, str_pool + sym->index);
 		
 		// 공통 속성 출력
-		printf("%s %s, line %d", sym->type, sym->kind, sym->lineno);
+		printf("line %d, %s %s", sym->lineno, sym->type, sym->kind);
 
 		// 함수라면 파라미터 추가 출력
 		if (strcmp(sym->kind, "function") == 0) {
 			printf(", params: ");
-			for (int j = 0; j < sym->param_count; j++) {
-				printf("%s", sym->param_types[j]);
-				if (j < sym->param_count - 1) {
-					printf(", ");
-				}
-			}
+			if (sym->params_count == 0) { printf("- None -"); }
+			else{ printf("%s ", sym->params); }
 		}
 
 		printf("\n");
@@ -278,8 +294,8 @@ void init_sym_table() {
 		symbol_table[i].lineno = -1;
 		symbol_table[i].type[0] = '\0';  // 자료형 초기화
 		symbol_table[i].kind[0] = '\0';  // 종류 초기화
-		symbol_table[i].param_count = 0; // 함수의 파라미터 개수 초기화
-		symbol_table[i].param_types[0][0] = '\0'; // 함수의 파라미터 유형 초기화
+		symbol_table[i].params_count = 0; // 함수의 파라미터 개수 초기화
+		symbol_table[i].params[0] = '\0'; // 함수의 파라미터 유형 초기화
 	}
 }
 

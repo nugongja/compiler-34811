@@ -21,7 +21,6 @@ void main()
 
 	init_sym_table();	
 	init_hash_table();
-	printf("%-7s %-15s %-15s %s\n", "Line", "Token type", "token", "Info");
 
 	yyparse();  // parse the input file
 

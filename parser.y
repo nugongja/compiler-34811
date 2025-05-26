@@ -6,12 +6,15 @@
 /*yacc source for Mini C*/
 void semantic(int);
 extern void update_sym_table(int, int, char*, char*);
-char type_buffer[16];
-char* current_qualifier = NULL;
-char* current_type = type_buffer;
-char* current_kind;
-int func_name_index;
-extern int st_index;
+extern void set_param_info(int sym_id, const char* param_str, int count);
+char type_buffer[16];					// 변수의 type이 여러개일 경우를 위한 버퍼
+char* current_qualifier = NULL;				// const 여부
+char* current_type = type_buffer;			// int, float, void 등 변수의 type 저장
+char* current_kind;						// scalar, array, function 등 종류 저장
+int func_name_index;					// 현재 함수의 symbol table 인덱스 기록
+char param_list_buffer[128];				// 현재 함수의 파라미터 정보 임시 저장 버퍼
+int param_count = 0;					// 현재 함수의 파라미터 개수 저장
+extern int st_index;						
 extern int line_num;
 extern char* yytext;
 %}
@@ -27,13 +30,18 @@ extern char* yytext;
 %nonassoc TLOWERTHANELSE
 %nonassoc TELSE
 %%
-mini_c 		: translation_unit				{semantic(1);};
-translation_unit 	: external_dcl				{semantic(2);}
-			| translation_unit external_dcl		{semantic(3);};
-external_dcl 		: function_def				{semantic(4);}
-		  	| declaration					{semantic(5);};
+mini_c 		: translation_unit					{semantic(1);};
+translation_unit 	: external_dcl					{semantic(2);}
+			| translation_unit external_dcl			{semantic(3);};
+external_dcl 		: function_def					{semantic(4);}
+		  	| declaration						{semantic(5);};
+function_def 	: function_header compound_st			{
+										set_param_info(func_name_index, param_list_buffer, param_count);
 
-function_def 	: function_header compound_st			{semantic(6);};
+										// 버퍼 초기화
+    										param_list_buffer[0] = '\0';
+    										param_count = 0;
+										semantic(6);};
 function_header 	: dcl_spec function_name formal_param	{
 										current_kind = "function";
 										update_sym_table(func_name_index, line_num, current_type, current_kind); 											semantic(7);
@@ -58,6 +66,14 @@ formal_param_list 	: param_dcl						{semantic(20);}
 		    	| formal_param_list TCOMMA param_dcl 	{semantic(21);};
 param_dcl 		: dcl_spec declarator				{
 										update_sym_table(st_index, line_num, current_type, current_kind);
+
+										// 파라미터 정보 누적
+										if (param_count > 0) strcat(param_list_buffer, ", ");
+										strcat(param_list_buffer, current_type);
+    										strcat(param_list_buffer, " ");
+    										strcat(param_list_buffer, current_kind);
+    										param_count++;
+
 										semantic(22);};
 compound_st 	: TLBRACE opt_dcl_list opt_stat_list TRBRACE 	{semantic(23);};
 opt_dcl_list 		: declaration_list					{semantic(24);}
@@ -147,6 +163,8 @@ actual_param_list 	: assignment_exp				{semantic(93);}
 		   	| actual_param_list TCOMMA assignment_exp 	{semantic(94);};
 primary_exp 		: TIDENT						{semantic(95);}
 	     		| TNUMBER					{semantic(96);}
+			| TFLOATNUM				{semantic(98);}
+			| TINTNUM					{semantic(99);}
 	     		| TLPAREN expression TRPAREN				{semantic(97);};
 %%
 
