@@ -142,7 +142,7 @@ void printSymbolTable() {
 	printf("ID\tIndex\tLength\tSymbol\t\tAttributes\n");
 	for (int i = 0; i < sym_id; i++) {
 		SymbolInfo* sym = &symbol_table[i];
-		printf("%d\t%d\t%d\t%s\t\t", sym->id, sym->index, sym->length, str_pool + sym->index);
+		printf("%-7d\t%-7d\t%-7d\t%-10s\t", sym->id, sym->index, sym->length, str_pool + sym->index);
 		
 		// 공통 속성 출력
 		printf("line %d, %s %s", sym->lineno, sym->type, sym->kind);
