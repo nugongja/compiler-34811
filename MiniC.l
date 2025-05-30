@@ -49,6 +49,8 @@ int st_index = 0;
 ","								return TCOMMA;
 "."								return TDOT;
 ";"								return TSEMI;
+"#include"							return TINCLUDE;
+"#define"							return TDEFINE;
 [0-9]+    return(TNUMBER);  // 새로 추가
 [+-]?([1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?)		return(TINTNUM);
 [+-]?([0-9]+"."[0-9]+(e[+-]?[0-9]+)?)			return(TFLOATNUM);

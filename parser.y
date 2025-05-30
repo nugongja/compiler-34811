@@ -25,16 +25,35 @@ extern char* yytext;
 %token TLBRACE TRBRACE TASSIGN TFLOATNUM TSTAR TPLUS TMOD TMINUS TSLASH 
 %token TINTNUM TIDENT TCHARCONST TNUMBER TSEMI TDOT TSTRING TERROR
 %token TCOMMA TLSQUARE TRSQUARE TGREAT TLESS TMUL TDIV TNOT 
-%token TINTEGER
+%token TINCLUDE TDEFINE
 
 %nonassoc TLOWERTHANELSE
 %nonassoc TELSE
 %%
-mini_c 		: translation_unit					{semantic(1);};
-translation_unit 	: external_dcl					{semantic(2);}
-			| translation_unit external_dcl			{semantic(3);};
+mini_c 		: translation_units					{semantic(1);};
+translation_units	: translation_unit					{semantic(2);}
+			| translation_units translation_unit		{semantic(108);};
+translation_unit 	: external_dcl					{semantic(3);}
+			| preprocessor 	 				{semantic(100);};
 external_dcl 		: function_def					{semantic(4);}
 		  	| declaration						{semantic(5);};
+preprocessor	: include_stmt              				{semantic(101);}
+			| define_stmt                				{semantic(102);};
+include_stmt		: TINCLUDE TSTRING           			{semantic(103);};
+define_stmt		: TDEFINE TIDENT const_expression 		{
+	 if (strcmp(current_type, "const string") == 0)
+        	current_kind = "macro";  // 또는 "literal"
+    	else
+        	current_kind = "scalar"; // int, float 상수
+	update_sym_table(st_index, line_num, current_type, current_kind);
+	semantic(104);
+};
+const_expression	: TINTNUM   					{semantic(105);
+        									strcpy(type_buffer, "const int");}
+			| TFLOATNUM 					{semantic(106);
+        									strcpy(type_buffer, "const float");}
+			| TSTRING   						{semantic(107);
+        									strcpy(type_buffer, "const string");};
 function_def 	: function_header compound_st			{
 										set_param_info(func_name_index, param_list_buffer, param_count);
 

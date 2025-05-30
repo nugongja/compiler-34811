@@ -110,7 +110,8 @@ int process_sym_table(char* identifier) {
 * kind - 심볼의 종류 (scalar, array, function 등)
 */
 void update_sym_table(int sym_id, int lineno, const char* type, const char* kind) {
-	symbol_table[sym_id - 1].lineno = lineno;										
+	if(symbol_table[sym_id - 1].lineno == NULL)
+		symbol_table[sym_id - 1].lineno = lineno;										
 	strcpy(symbol_table[sym_id - 1].type, type);
 	strcpy(symbol_table[sym_id - 1].kind, kind);
 }

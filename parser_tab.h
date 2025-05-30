@@ -50,8 +50,9 @@
 #define	TMUL	304
 #define	TDIV	305
 #define	TNOT	306
-#define	TINTEGER	307
-#define	TLOWERTHANELSE	308
+#define	TINCLUDE	307
+#define	TDEFINE	308
+#define	TLOWERTHANELSE	309
 
 
 extern YYSTYPE yylval;
